@@ -1,0 +1,104 @@
+@model AuctionAppIep.Models.View.FilterAuctionsModel
+@using AuctionAppIep.Controllers;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="auctions">
+<div class="row " >
+      <div class="col-xl-12 bg-info text-white">
+            <form asp-controller="Home" asp-action="Index">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="min" class="control-label"></label>
+                            <input  id="min" asp-for="min" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="max" class="control-label"></label>
+                            <input  id="max" asp-for="max" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="word" class="control-label"></label>
+                            <input  id="word" asp-for="word" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" value="Go" class="btn btn-outline-light btn-lg btn-block"
+
+                        onclick="filter()" >Search</button>
+                    </div>
+            </form>
+      </div>
+</div>   
+
+    <br>
+    <br>
+    <br>
+
+
+
+
+
+
+<div class="row col-xl-12">
+    @{
+        int ind=0;
+        int cnt=Model.auctions.Count;
+        
+    }
+    <input id="count" value="@cnt" hidden />
+@foreach (var a in Model.auctions)
+    {
+        int diff=a.bidPrice-a.startingPrice;
+        ind=ind+1;
+        
+        TimeSpan d=(a.dateEnd-DateTime.Now);
+        int days=d.Days;
+        int hours=d.Hours;
+        int minutes=d.Minutes;
+        int seconds=d.Seconds;
+        string dd=days<10?"0"+days.ToString():days.ToString();
+        string hh=hours<10?"0"+hours.ToString():hours.ToString();
+        string mm=minutes<10?"0"+minutes.ToString():minutes.ToString();
+        string ss=seconds<10?"0"+seconds.ToString():seconds.ToString();
+        string time=string.Format("{0}:{1}:{2}:{3}",dd,hh,mm,ss);
+        string lastuser=a.lastUser==null?"/":a.lastUser;
+
+<div class="card col-xl-3" >
+    
+     <img  width="120" height="140" class="card-img-top" src="data:image/png;base64, @Convert.ToBase64String(a.imageData)" >
+    <div class="card-body ">
+      <h5  class="card-title bg-info">@a.name</h5>
+      <p class="card-text">@a.description</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li  id="@ind" class="list-group-item">@time</li>
+      <li class="list-group-item">Bid increment: @diff</li>
+      <li class="list-group-item">Last Bidder: @lastuser</li>
+    </ul>
+    <div class="card-body">
+      <a asp-action="AuctionData" asp-controller="Home"  asp-route-id="@a.id" class="card-link">Bid</a>
+       <a asp-action="AuctionData" asp-controller="Home"  asp-route-id="@a.id" class="card-link">Show more</a>
+    </div>
+</div>
+ }
+
+
+<div>
+        <ul class="pagination">
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.currentPage ? "active" : "")">
+                    <a  asp-action="IndexAuctions" asp-controller="Home"
+                    asp-route-currentpage="@i" asp-route-min="@Model.min"
+                    asp-route-max="@Model.max" asp-route-word="@Model.word"
+                    class="page-link">@i</a>
+                </li>
+            }
+        </ul>
+</div>
+
+</div>
+
+
+

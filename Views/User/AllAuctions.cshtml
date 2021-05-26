@@ -1,0 +1,44 @@
+@model AuctionAppIep.Models.View.AllAuctionsModel
+
+
+ <a class="btn  btn-outline-dark btn-lg btn-block" asp-controller="User" asp-action="AdminStartPage">Go Back</a>
+<br>
+<br>
+<table class="table table-bordered ">
+  <thead >
+    <tr class="table-warning" >
+      <th scope="col">img</th>  
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Start date</th>
+      <th scope="col">End date</th>
+      <th scope="col">Starting price</th>
+      <th scope="col">delete</th>
+      <th scope="col">accept</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach (AuctionAppIep.Models.Database.Auction a in Model.auctions ) {
+            <tr class="table-light">
+                <td>
+                    <img src="data:image/png;base64, @Convert.ToBase64String(a.imageData)" 
+                    height="80" width="80"/>
+                </td>
+                <td>@a.name</td>
+                <td>@a.description</td>
+                <td>@a.dateStart</td>
+                <td>@a.dateEnd</td>
+                <td>@a.startingPrice</td>
+                <td>
+                    <a class="btn  btn-dark" asp-controller="User" asp-action="DeleteAuction" asp-route-id="@a.id" >Delete</a>
+                     
+                </td>
+                <td>
+                    <a class="btn  btn-dark" asp-controller="User" asp-action="AcceptAuction" asp-route-id="@a.id" >Accept</a>
+
+                </td>
+                
+            </tr>
+    }
+  </tbody>
+</table>

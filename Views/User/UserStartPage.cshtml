@@ -1,0 +1,90 @@
+@model AuctionAppIep.Models.View.UserDataModel
+
+<div class="container">
+  <h1 class="text-info" >Info</h1>
+    <div class="row">
+        <div class="col-sm-4 bg-light text-dark border">
+        <p>First Name:</p>
+        </div>
+        <div class="col-sm-6 bg-info text-white border" >
+        <p>@Model.firstName</p>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-sm-4 bg-light text-dark border" >
+            <p>Last Name:</p>
+            </div>
+            <div class="col-sm-6 bg-info text-white border" >
+            <p>@Model.lastName</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 bg-light text-dark border" >
+            <p>UserName:</p>
+            </div>
+            <div class="col-sm-6 bg-info text-white border" >
+            <p>@Model.userName</p>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-sm-4 bg-light text-dark border" >
+                <p>Email:</p>
+                </div>
+                <div class="col-sm-6 bg-info text-white border" >
+                <p>@Model.email</p>
+                </div>
+            </div>    
+  
+        <div class="row">
+            <div class="col-sm-4 bg-light text-dark border" >
+            <p>Gender:</p>
+            </div>
+            <div class="col-sm-6 bg-info text-white border" >
+            <p>@Model.gender</p>
+            </div>
+        </div>
+  
+        <div class="row">
+            <div class="col-sm-4 bg-light text-dark border" >
+            <p>Tokens:</p>
+            </div>
+            <div class="col-sm-6 bg-info text-white border" >
+            <p>@Model.tokens</p>
+            </div>
+        </div>
+        <div class="row ">
+             <form class="form-inline col-sm-10" asp-controller="User" asp-action="Edit">
+                 <input type="submit" class="btn btn-outline-info btn-lg btn-block" value="Edit" ></button>
+            </form>
+           
+        </div>
+</div>
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2" >
+             <a class="btn btn-info btn-lg btn-block " asp-controller="Auction" asp-action="Create">Create new auction</a>
+
+        </div>
+       
+        <div class="col-sm-2" >
+            <a class="btn btn-info btn-lg btn-block " asp-controller="Auction" asp-action="ShowAuction">Show my auctions</a>
+
+        </div>
+        <div class="col-sm-2" >
+            <a class="btn btn-info btn-lg btn-block " asp-controller="Auction" asp-action="ShowWonAuctions">Show won auctions</a>
+
+        </div>
+        <div class="col-sm-2" >
+             <a class="btn btn-info btn-lg btn-block " asp-controller="User" asp-action="ShowTokens">Buy more tokens</a>
+
+        </div>
+        <div class="col-sm-2" >
+             <a class="btn btn-info btn-lg btn-block " asp-controller="User" asp-action="ShowOrders">Show my orders</a>
+
+        </div>
+    </div>
+    
+</div>

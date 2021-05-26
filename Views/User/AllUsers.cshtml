@@ -1,0 +1,35 @@
+@model AuctionAppIep.Models.View.AllUsersModel
+
+
+ <a class="btn  btn-outline-dark btn-lg btn-block" asp-controller="User" asp-action="AdminStartPage">Go Back</a>
+<br>
+<br>
+<table class="table table-bordered ">
+  <thead >
+    <tr class="table-warning" >
+      <th scope="col">First name</th>  
+      <th scope="col">Last name</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Tokens</th>
+      <th scope="col">Edit</th>
+
+    </tr>
+  </thead>
+  <tbody>
+      @foreach (AuctionAppIep.Models.Database.User a in Model.users ) {
+            <tr class="table-light">
+                <td>@a.firstName</td>
+                <td>@a.lastName</td>
+                <td>@a.UserName</td>
+                <td>@a.Email</td>
+                <td>@a.tokens</td>
+                <td>
+                    <a class="btn  btn-dark" asp-controller="User" asp-action="DeleteUser" asp-route-username="@a.UserName" >Delete</a>
+                    
+                </td>
+                
+            </tr>
+    }
+  </tbody>
+</table>

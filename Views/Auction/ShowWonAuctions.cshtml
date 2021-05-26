@@ -1,0 +1,36 @@
+@model AuctionAppIep.Models.View.ShowAuctionModel
+
+
+<h2 class="text-info" style="text-align:center">Won Auctions</h2>
+<br>
+  <a class="btn  btn-outline-info btn-lg btn-block" asp-controller="User" asp-action="UserStartPage">Go Back</a>
+  <br>
+<div class="row col-xl-12">
+ 
+    
+    
+@foreach (var a in Model.auctions)
+    {
+        int diff=a.bidPrice-a.startingPrice;
+        
+    
+
+<div class="card col-xl-3" >
+    
+     <img  width="120" height="140" class="card-img-top" src="data:image/png;base64, @Convert.ToBase64String(a.imageData)" >
+        <div class="card-body ">
+        <h5  class="card-title bg-info">@a.name</h5>
+        <p class="card-text">@a.description</p>
+        </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">Offer price: @a.startingPrice</li>
+            <li class="list-group-item">Bidding price: @a.bidPrice</li>
+            <li class="list-group-item">Auction closed: @a.dateEnd</li>
+        </ul>
+        <div class="card-body">
+                <a asp-action="WonData" asp-controller="Auction"  asp-route-id="@a.id" class="card-link">More...</a>
+        </div>
+</div>
+ }
+</div>
+

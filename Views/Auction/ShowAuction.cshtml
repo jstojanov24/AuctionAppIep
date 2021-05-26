@@ -1,0 +1,56 @@
+@model AuctionAppIep.Models.View.ShowAuctionModel
+
+ <a class="btn  btn-outline-dark btn-lg btn-block" asp-controller="User" asp-action="UserStartPage">Go Back</a>
+<br>
+<br>
+<table class="table table-bordered table-dark">
+  <thead class="table-danger" >
+    <tr>
+      <th scope="col">img</th>  
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Start date</th>
+      <th scope="col">End date</th>
+      <th scope="col">Starting price</th>
+      <th scope="col">Current price</th>
+      <th scope="col">status</th>
+      <th scope="col">edit</th>
+
+      
+    </tr>
+  </thead>
+  <tbody>
+      @foreach (AuctionAppIep.Models.Database.Auction a in Model.auctions ) {
+          string disabled=a.status=="DRAFT"?"disabled":"";
+            <tr>
+                <td>
+                    <img src="data:image/png;base64, @Convert.ToBase64String(a.imageData)" 
+                    height="80" width="80"/>
+                </td>
+                <td>@a.name</td>
+                <td>@a.description</td>
+                <td>@a.dateStart</td>
+                <td>@a.dateEnd</td>
+                <td>@a.startingPrice</td>
+                <td>@a.bidPrice</td>
+                <td>@a.status</td>
+                <td>
+                    @{
+                        if(a.status=="DRAFT"){
+                      
+                    <a class="btn  btn-dark"    
+                    asp-controller="Auction" asp-action="EditAuction" asp-route-id="@a.id" > Update</a>
+                    <br>
+                    <a class="btn  btn-dark"    
+                    asp-controller="Auction" asp-action="DeleteAuction" asp-route-id="@a.id" > Delete</a>
+                    } 
+                    else{
+                        <div>Not allowed</div>
+                    }
+                    }
+                </td>
+                
+            </tr>
+    }
+  </tbody>
+</table>

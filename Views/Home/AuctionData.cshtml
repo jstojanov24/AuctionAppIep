@@ -1,0 +1,86 @@
+@model AuctionAppIep.Models.View.AuctionDataModel
+@using AuctionAppIep.Models.Database
+
+@{
+    ViewData["Title"]="Auction details";
+}
+@{
+    var diff=Model.auction.bidPrice-Model.auction.startingPrice;
+    if(Model.auction.lastUser==null) Model.auction.lastUser="/";
+}
+<div class="row">
+    <input id="count" value="1" hidden />
+    @{
+          TimeSpan d=(Model.auction.dateEnd-DateTime.Now);
+              int days=d.Days;
+              int hours=d.Hours;
+              int minutes=d.Minutes;
+              int seconds=d.Seconds;
+              string dd=days<10?"0"+days.ToString():days.ToString();
+              string hh=hours<10?"0"+hours.ToString():hours.ToString();
+              string mm=minutes<10?"0"+minutes.ToString():minutes.ToString();
+              string ss=seconds<10?"0"+seconds.ToString():seconds.ToString();
+              string time=string.Format("{0}:{1}:{2}:{3}",dd,hh,mm,ss);
+          } 
+    <div class="card col-xl-4 bg-warning " >
+        <div class="card-header text-danger">
+            @Model.error
+        </div>
+        <img   width="130" height="150" class="card-img-top" src="data:image/png;base64, @Convert.ToBase64String(Model.auction.imageData)" >
+        <div class="card-body ">
+          <h5  class="card-title">@Model.auction.name</h5>
+          <p class="card-text">@Model.auction.description</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li  id="1" class="list-group-item">@time</li>
+          <li class="list-group-item">Offer price: @Model.auction.startingPrice</li>
+          <li class="list-group-item">Bidding: @Model.auction.bidPrice</li>
+          <li class="list-group-item">Owner: @Model.user</li>
+          <li class="list-group-item">Last Bidder: @Model.auction.lastUser</li>
+        </ul>
+        <div class="card-body ">
+          <a asp-action="BidAuction" asp-controller="Home" asp-route-id="@Model.auction.id" class="card-link">Bid</a>
+        </div>
+    </div>
+    <div class=" col-xl-8">
+      @{
+          int ind=0;
+      }
+          <table class="table table-dark">
+                  <thead >
+                    <tr  >
+                      <th scope="col">Id</th>  
+                      <th scope="col">Date</th>  
+                      <th scope="col">Last user</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      @foreach (AuctionBid a in Model.auctionBids ) {
+                            ind++;
+                            <tr >
+                                <td>@a.id</td>
+                                <td>@a.bidDate</td>
+                                <td>@Model.lastusers.ElementAt(ind-1) </td>
+                                
+                            </tr>
+                    }
+                  </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+<br>
+<br>
+<br>
+<a  asp-action="IndexAuctionsWithout" asp-controller="Home"
+                    
+    class=" btn btn-warning btn-lg btn-block">Go back</a>
+
+
+ <a class="btn btn-warning btn-lg btn-block " asp-controller="User" asp-action="ShowTokens">Buy tokens </a>
+
+

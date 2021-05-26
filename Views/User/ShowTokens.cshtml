@@ -1,0 +1,171 @@
+@{
+    ViewData["Title"]="Order";
+}
+<h1 style="text-align:center"> Choose your package </h1>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AcuZywuYpNS1Xgpayz7WMOFAqlig9j_7NsUGxXH6l56NSowMV6TrzN-3e9iicCZCnruN08Tygyss48kK">
+</script>
+
+
+
+<br>
+<br>
+<div class="row">
+    <div class="column col-4">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                SILVER(5 tokens)
+            </div>
+            <div class="card-body">
+                <div id="paypal1"></div>
+                <h5 class="card-title bg-dark text-white">price: 30 </h5>
+            </div>
+        </div>
+    </div>
+    <div class="column col-4">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                GOLD(10 tokens)
+            </div>
+            <div class="card-body">
+                <div id="paypal2"></div>
+                <h5 class="card-title bg-dark text-white ">price: 50 </h5>
+            </div>
+        </div>
+    </div>
+    <div class="column col-4">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                PLATINUM(20 tokens)
+            </div>
+            <div class="card-body">
+                <div id="paypal3"></div>
+                <h5 class="card-title bg-dark text-white">price: 80 </h5>
+            </div>
+        </div>
+    </div>
+  
+</div>
+<br>
+<br>
+<br>
+<a class="btn  btn-outline-warning btn-lg btn-block" asp-controller="User" asp-action="UserStartPage">Go Back</a>
+
+
+
+
+
+<script>
+    paypal.Buttons ( {
+        createOrder: function ( data, actions ) {
+            return actions.order.create ( {
+                purchase_units: [{
+                    amount: {
+                        value: "0.01"
+                    }
+                }]
+            } )
+        },
+        onApprove: function ( data, actions ) {
+            return actions.order.capture ( ).then (
+                function ( details ) {
+                    //poziv funkcije kontrolera 
+                   // alert ( "SUCCESS " + details.payer.name.given_name )
+                   var verificationToken = $("input[name='__RequestVerificationToken']").val ( );
+                   $.ajax ({
+                        type: "POST",
+                        url: "/User/BuyTokens",
+                        data: {
+                            "type" : 1,
+                            "__RequestVerificationToken" : verificationToken
+                        },
+                        success: function ( response ) {
+                                alert("Success");
+                        },
+                        error: function ( response ) {
+                            alert ( response )
+                        }
+                    })
+
+                }
+            )
+        }
+    } ).render ( "#paypal1" )
+</script>
+
+<script>
+    paypal.Buttons ( {
+        createOrder: function ( data, actions ) {
+            return actions.order.create ( {
+                purchase_units: [{
+                    amount: {
+                        value: "0.02"
+                    }
+                }]
+            } )
+        },
+        onApprove: function ( data, actions ) {
+            return actions.order.capture ( ).then (
+                function ( details ) {
+                    //poziv funkcije kontrolera 
+                   // alert ( "SUCCESS " + details.payer.name.given_name )
+                   var verificationToken = $("input[name='__RequestVerificationToken']").val ( );
+                   $.ajax ({
+                        type: "POST",
+                        url: "/User/BuyTokens",
+                        data: {
+                            "type" : 2,
+                            "__RequestVerificationToken" : verificationToken
+                        },
+                        success: function ( response ) {
+                                alert("Success");
+                        },
+                        error: function ( response ) {
+                            alert ( response )
+                        }
+                    })
+
+                }
+            )
+        }
+    } ).render ( "#paypal2" )
+</script>
+
+<script>
+    paypal.Buttons ( {
+        createOrder: function ( data, actions ) {
+            return actions.order.create ( {
+                purchase_units: [{
+                    amount: {
+                        value: "0.03"
+                    }
+                }]
+            } )
+        },
+        onApprove: function ( data, actions ) {
+            return actions.order.capture ( ).then (
+                function ( details ) {
+                    //poziv funkcije kontrolera 
+                   // alert ( "SUCCESS " + details.payer.name.given_name )
+                   var verificationToken = $("input[name='__RequestVerificationToken']").val ( );
+                   $.ajax ({
+                        type: "POST",
+                        url: "/User/BuyTokens",
+                        data: {
+                            "type" : 3,
+                            "__RequestVerificationToken" : verificationToken
+                        },
+                        success: function ( response ) {
+                                alert("Success");
+                        },
+                        error: function ( response ) {
+                            alert ( response )
+                        }
+                    })
+
+                }
+            )
+        }
+    } ).render ( "#paypal3" )
+</script>
+

@@ -1,0 +1,28 @@
+@model AuctionAppIep.Models.View.AllOrdersModel
+
+
+
+<a class="btn  btn-outline-dark btn-lg btn-block" asp-controller="User" asp-action="UserStartPage">Go Back</a>
+<br>
+<br>
+<table class="table table-bordered ">
+  <thead >
+    <tr class="table-warning" >
+      <th scope="col">Id</th>  
+      <th scope="col">Price</th>  
+      <th scope="col">Tokens</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach (AuctionAppIep.Models.Database.TokensOrder a in Model.orders ) {
+            <tr class="table-light">
+                <td>@a.id</td>
+                <td>@a.price</td>
+                <td>@a.tokens</td>
+                <td>@a.dateOrdered</td>
+                
+            </tr>
+    }
+  </tbody>
+</table>

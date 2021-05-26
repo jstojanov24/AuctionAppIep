@@ -1,0 +1,44 @@
+@using Microsoft.AspNetCore.Identity
+@using AuctionAppIep.Models.Database
+@using System.Security.Claims
+@inject SignInManager<User> signInManager
+@{
+    string fullName = "";
+    string tokens="";
+    string gender="";
+    foreach (Claim claim in User.Claims ) {
+        if ( claim.Type.Equals ( "fullName" ) ) {
+            fullName = claim.Value;
+        }
+        if ( claim.Type.Equals ( "tokens" ) ) {
+            tokens = claim.Value;
+        }
+        if ( claim.Type.Equals ( "gender" ) ) {
+            gender = claim.Value;
+        }
+    }
+    if(gender=="male") gender="Mr";
+    else gender="Mrs";
+   
+}
+
+<ul class="navbar-nav">
+    @if ( signInManager.IsSignedIn ( User ) ) {
+
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="User" asp-action="UserStartPage">Welcome @gender @fullName</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-controller="User" asp-action="Logout">
+                <input type="submit" class="nav-link btn btn-link text-info" value="Log out" />
+            </form>
+        </li>
+    } else {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="User" asp-action="Login">Log in</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="User" asp-action="Register">Register</a>
+        </li>
+    }
+</ul>
